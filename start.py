@@ -17,6 +17,13 @@ def start():
     blockchain = chain.Chain()
 
     miner = node.Node()
+    valid = miner.validateChain(blockchain.getChain())
+    if(valid):
+        log.debug("Chain validated successfully.")
+    else:
+        log.error("Chain is broken")
+        quit()
+    
     while(True):
         mined_proof = miner.mineBlock(blockchain.getLastBlock()["proof"])
         blockchain.addBlock(mined_proof, miner.hash(blockchain.getLastBlock()))
